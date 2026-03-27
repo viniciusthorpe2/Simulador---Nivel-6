@@ -1,0 +1,145 @@
+using System;
+
+public class Enemy
+{
+    private int health;
+    private float velocity;
+
+    public Enemy(int health, float velocity)
+    {
+        this.health = health;
+        this.velocity = velocity;
+    }
+
+    // Getter para health (encapsulamento)
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    // Método para receber dano
+    public void ReceiveDamage(int damage)
+    {
+        health -= damage;
+        if (health < 0)
+            health = 0;
+    }
+
+    // Exibe status
+    public virtual void DisplayStatus()
+    {
+        Console.WriteLine($"Health: {health}, Velocity: {velocity}");
+    }
+
+    // Movimento padrão
+    public virtual void Move()
+    {
+        Console.WriteLine("Enemy is moving...");
+    }
+
+    // Verifica se está morto
+    public bool IsDead()
+    {
+        return health <= 0;
+    }
+}
+
+public class EnemyWithAttack : Enemy
+{
+    private int attack;
+
+    public EnemyWithAttack(int health, float velocity, int attack)
+        : base(health, velocity)
+    {
+        this.attack = attack;
+    }
+
+    public void AttackPlayer()
+    {
+        Console.WriteLine($"Enemy attacks dealing {attack} damage!");
+    }
+
+    public override void DisplayStatus()
+    {
+        base.DisplayStatus();
+        Console.WriteLine($"Attack: {attack}");
+    }
+}
+
+public class FlyingEnemy : Enemy
+{
+    private float altitude;
+
+    public FlyingEnemy(int health, float velocity, float altitude)
+        : base(health, velocity)
+    {
+        this.altitude = altitude;
+    }
+
+    public void Fly()
+    {
+        Console.WriteLine($"Flying at altitude: {altitude}");
+    }
+
+    public override void Move()
+    {
+        Console.WriteLine("Flying enemy is soaring through the sky!");
+    }
+
+    public override void DisplayStatus()
+    {
+        base.DisplayStatus();
+        Console.WriteLine($"Altitude: {altitude}");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Enemy enemy1 = new EnemyWithAttack(100, 2.5f, 20);
+        Enemy enemy2 = new FlyingEnemy(80, 3.0f, 50);
+
+        Enemy[] enemies = { enemy1, enemy2 };
+
+        foreach (Enemy enemy in enemies)
+        {
+            enemy.Move(); // Polimorfismo
+            enemy.DisplayStatus();
+            Console.WriteLine("-------------------");
+        }
+
+        // Acesso específico
+        EnemyWithAttack attacker = enemy1 as EnemyWithAttack;
+        attacker?.AttackPlayer();
+
+        FlyingEnemy flyer = enemy2 as FlyingEnemy;
+        flyer?.Fly();
+    }
+}
+
+public class BossEnemy : Enemy
+{
+    private bool enraged = false;
+
+    public BossEnemy(int health, float velocity)
+        : base(health, velocity)
+    {
+    }
+
+    public void Infuriate()
+    {
+        if (!enraged && GetHealth() < 50)
+        {
+            enraged = true;
+            Console.WriteLine("Boss is now ENRAGED! Stronger attacks!");
+        }
+    }
+
+    public override void Move()
+    {
+        Console.WriteLine(enraged
+            ? "Boss moves aggressively!"
+            : "Boss moves slowly...");
+    }
+}
