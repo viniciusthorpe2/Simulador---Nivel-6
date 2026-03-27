@@ -1,0 +1,76 @@
+Respostas Nivel 6
+
+1. Identificação de atributos e métodos
+class_name Enemy
+var health: int
+var velocity: int
+var direction: String
+func move():
+print("Movendo...")
+func jump():
+print("Pulando...")
+Pergunta: Quais são os atributos e quais são os métodos da classe?
+--R: health, velocity e direction são atributos. move() e jump() são metodos de classe.
+
+2. Múltipla escolha – conceito de classe
+Pergunta: O que é uma classe em programação orientada a objetos?
+A) Um valor armazenado na memória
+B) Um modelo que define atributos e comportamentos
+C) Um tipo de variável
+D) Um comando de repetição
+--R: B) Um modelo que define atributos e comportamentos
+
+3. Análise de acesso
+class_name Enemy
+var health: int = 100
+var e1 = Enemy.new()
+var e2 = Enemy.new()
+e1.health = 50
+Pergunta: Qual será o valor de e2.health? Explique.
+--R: O valor de e2.health será 100.
+
+4. Análise de acesso
+class_name Enemy
+var _health: int = 100
+var e = Enemy.new()
+e._health = 50
+Pergunta: Qual será o valor de e._health? Explique.
+--R: O valor de e._health será 50
+
+5. Associação de conceito
+class_name Enemy
+var health: int = 100
+func display():
+print("Enemy com vida: " + str(health))
+class_name BossEnemy
+extends Enemy
+var special_attack: int = 50
+var boss = BossEnemy.new()
+boss.display()
+Pergunta: Por que boss consegue chamar display()?
+--R: O objeto boss consegue chamar display() por causa do conceito de herança.
+
+6. Associação de conceito
+class_name Enemy
+func move():
+print("Movendo")
+class_name JumpingEnemy
+extends Enemy
+func move():
+print("Pulando")
+var e: Enemy = JumpingEnemy.new()
+e.move()
+Pergunta: O que será exibido ao executar e.move()?
+--R: e.move() → "Pulando"
+
+7. Verdadeiro ou Falso
+( ) Métodos podem alterar atributos
+( ) Métodos não podem receber parâmetros
+( ) Métodos representam comportamentos
+--R: VFV
+
+8. Diferença entre objetos
+var e1 = Enemy.new()
+var e2 = Enemy.new()
+Pergunta: e1 e e2 são o mesmo objeto? Explique.
+--R: Não são o mesmo objeto são duas instâncias independentes da classe Enemy
